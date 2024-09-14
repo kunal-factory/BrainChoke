@@ -27,19 +27,20 @@ class LandingScreenState extends State<LandingScreen> {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text('Tasks to do!!'),
             bottom: const TabBar(
               tabs: [
                 Tab(
                   icon: Icon(
-                    Icons.home,
+                    Icons.edit,
                     color: Colors.cyan,
                   ),
                 ),
                 Tab(
                   icon: Icon(
-                    Icons.area_chart_rounded,
+                    Icons.edit_calendar,
                     color: Colors.cyan,
                   ),
                 ),
