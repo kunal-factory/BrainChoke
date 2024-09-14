@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectorders/Mobile/it_screen.dart';
+import 'package:projectorders/Mobile/lt_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -23,40 +24,21 @@ class LandingScreenState extends State<LandingScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Tasks to do!!'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'Home'),
+                Tab(text: 'Favorites'),
+              ],
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text('Page 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.train,
-              ),
-              title: const Text('Page 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-      body: const ItScreen(),
-    );
+          ),
+          body: const TabBarView(
+            children: [ItScreen(), LtScreen()],
+          ),
+        ));
   }
 }
