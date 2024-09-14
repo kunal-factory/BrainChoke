@@ -31,8 +31,18 @@ class LandingScreenState extends State<LandingScreen> {
             title: const Text('Tasks to do!!'),
             bottom: const TabBar(
               tabs: [
-                Tab(text: 'Home'),
-                Tab(text: 'Favorites'),
+                Tab(
+                  icon: Icon(
+                    Icons.home,
+                    color: Colors.cyan,
+                  ),
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.area_chart_rounded,
+                    color: Colors.cyan,
+                  ),
+                ),
               ],
             ),
           ),
