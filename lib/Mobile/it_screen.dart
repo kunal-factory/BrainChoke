@@ -14,14 +14,15 @@ class ItScreenState extends State<ItScreen> {
       child: Material(
         color: Colors.white,
         child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "12 Sept 2024",
                   style: TextStyle(
-                    fontSize: 25,
-                  ),
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.teal),
                 ),
                 Expanded(
                     child: ListView.builder(

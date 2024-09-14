@@ -35,13 +35,13 @@ class LandingScreenState extends State<LandingScreen> {
                 Tab(
                   icon: Icon(
                     Icons.edit,
-                    color: Colors.cyan,
+                    color: Colors.teal,
                   ),
                 ),
                 Tab(
                   icon: Icon(
                     Icons.edit_calendar,
-                    color: Colors.cyan,
+                    color: Colors.teal,
                   ),
                 ),
               ],
