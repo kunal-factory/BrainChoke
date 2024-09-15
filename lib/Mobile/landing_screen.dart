@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:projectorders/Mobile/it_screen.dart';
 import 'package:projectorders/Mobile/lt_screen.dart';
 
@@ -29,8 +30,17 @@ class LandingScreenState extends State<LandingScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: const Text('Tasks to do!!'),
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              systemNavigationBarColor: Colors.teal, // Navigation bar
+              statusBarColor: Colors.teal, // Status bar
+            ),
+            title: const Text(
+              'Tasks to do also!!',
+              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.teal),
+            ),
             bottom: const TabBar(
+              indicatorColor: Colors.teal,
+              labelColor: Colors.teal,
               tabs: [
                 Tab(
                   icon: Icon(
