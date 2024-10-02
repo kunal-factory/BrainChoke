@@ -8,6 +8,44 @@ class ItScreen extends StatefulWidget {
 }
 
 class ItScreenState extends State<ItScreen> {
+  final List<SubTask> subTasks = [
+    SubTask(
+      title: 'Design database schema',
+      isCompleted: true,
+      dueDate: DateTime.now().add(Duration(days: 2)),
+      priority: 'High',
+      assignee: 'John',
+    ),
+    SubTask(
+      title: 'Create API endpoints',
+      isCompleted: false,
+      dueDate: DateTime.now().add(Duration(days: 5)),
+      priority: 'Medium',
+      assignee: 'Doe',
+    ),
+    SubTask(
+      title: 'Set up CI/CD pipeline',
+      isCompleted: false,
+      dueDate: DateTime.now().add(Duration(days: 7)),
+      priority: 'Low',
+      assignee: 'Anna',
+    ),
+    SubTask(
+      title: 'Write unit tests',
+      isCompleted: true,
+      dueDate: DateTime.now().add(Duration(days: 1)),
+      priority: 'High',
+      assignee: 'Mark',
+    ),
+    SubTask(
+      title: 'Review code',
+      isCompleted: false,
+      dueDate: DateTime.now().add(Duration(days: 3)),
+      priority: 'Medium',
+      assignee: 'Sarah',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,67 +64,115 @@ class ItScreenState extends State<ItScreen> {
                 ),
                 Expanded(
                     child: ListView.builder(
-                  itemCount: 10,
-                  padding: EdgeInsets.all(10),
-                  itemBuilder: (context, i) {
-                    return i % 2 == 0
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 80, 101, 218),
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: const Color.fromARGB(255, 66, 66, 69)
-                                        .withOpacity(0.5),
-                                    offset: const Offset(2, 5),
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: Text(
-                                  'Hey this is my long text appbar title',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 251, 251, 253),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.red, // red as border color
-                                ),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: Text(
-                                  'Hey this is my long text appbar title',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 11, 11, 11),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          );
+                  itemCount: subTasks.length,
+                  itemBuilder: (context, index) {
+                    final subTask = subTasks[index];
+                    return SubTaskRow(subTask: subTask);
                   },
                 ))
               ],
             )),
       ),
     );
+  }
+}
+
+class SubTask {
+  final String title;
+  final bool isCompleted;
+  final DateTime dueDate;
+  final String priority;
+  final String assignee;
+
+  SubTask({
+    required this.title,
+    required this.isCompleted,
+    required this.dueDate,
+    required this.priority,
+    required this.assignee,
+  });
+}
+
+class SubTaskRow extends StatelessWidget {
+  final SubTask subTask;
+
+  SubTaskRow({required this.subTask});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      elevation: 0, // Remove shadow for flat design
+      color: subTask.isCompleted
+          ? Colors.green[100]
+          : Colors.grey[200], // Background color based on status
+      child: ListTile(
+        title: Text(
+          subTask.title,
+          style: TextStyle(
+            decoration: subTask.isCompleted
+                ? TextDecoration.lineThrough
+                : TextDecoration.none,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: subTask.isCompleted
+                ? Colors.green[700]
+                : Colors.black, // Darker green for completed, black for not
+          ),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Due Date
+            Row(
+              children: [
+                Icon(
+                  Icons.calendar_today,
+                  size: 14,
+                  color: Colors.grey[600],
+                ),
+                SizedBox(width: 4),
+                Text(
+                  'Due: ${subTask.dueDate.toLocal().toString().split(' ')[0]}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+            // Priority Tag
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: _getPriorityColor(subTask.priority),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                subTask.priority,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Function to get priority color
+  Color _getPriorityColor(String priority) {
+    switch (priority.toLowerCase()) {
+      case 'high':
+        return Colors.red;
+      case 'medium':
+        return Colors.orange;
+      case 'low':
+        return Colors.green;
+      default:
+        return Colors.grey;
+    }
   }
 }

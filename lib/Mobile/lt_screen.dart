@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class LtScreen extends StatefulWidget {
@@ -7,7 +9,102 @@ class LtScreen extends StatefulWidget {
   LtScreenState createState() => LtScreenState();
 }
 
+class Task {
+  final String title;
+  final int subTasks;
+  final DateTime dateCreated;
+  final Color color;
+
+  Task({
+    required this.title,
+    required this.subTasks,
+    required this.dateCreated,
+    required this.color,
+  });
+}
+
+class TaskListRow extends StatelessWidget {
+  final Task task;
+  final int totalTasks;
+
+  TaskListRow({required this.task, required this.totalTasks});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      color: task.color.withOpacity(0.3),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: task.color,
+          child: Text(
+            task.subTasks.toString(),
+            style: const TextStyle(
+              color: Colors.white, // Set digit color to white
+              fontWeight: FontWeight.bold, // Make digit bold
+              fontSize: 16, // Adjust font size if needed
+            ),
+          ),
+        ),
+        title: Text(
+          task.title,
+          style: const TextStyle(
+            color: Colors.white, // Set title color to white
+            fontWeight: FontWeight.bold, // Make title bold
+            fontSize: 18, // Adjust font size
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Created on: ${task.dateCreated.toLocal().toString().split(' ')[0]}',
+              style: TextStyle(
+                color: Colors
+                    .grey[700], // Use a contrasting color for "Created on"
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              'Total tasks: $totalTasks',
+              style: const TextStyle(
+                color:
+                    Colors.black, // Use a contrasting color for "Total tasks"
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Function to get random color from 5 predefined colors
+Color getRandomColor() {
+  final List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.orange,
+    Colors.purple,
+  ];
+  return colors[Random().nextInt(colors.length)];
+}
+
 class LtScreenState extends State<LtScreen> {
+  final List<Task> tasks = List.generate(
+    10,
+    (index) => Task(
+      title: 'Task ${index + 1}',
+      subTasks: Random().nextInt(5) + 1, // Random number of subtasks
+      dateCreated: DateTime.now().subtract(Duration(days: index)), // Mock date
+      color: getRandomColor(), // Assign random color
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,62 +116,13 @@ class LtScreenState extends State<LtScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
-                  itemCount: 10,
-                  padding: EdgeInsets.all(10),
-                  itemBuilder: (context, i) {
-                    return i % 2 == 0
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 80, 101, 218),
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 5,
-                                    color: const Color.fromARGB(255, 66, 66, 69)
-                                        .withOpacity(0.5),
-                                    offset: const Offset(2, 5),
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: Text(
-                                  'Hey this is my long text appbar title',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 251, 251, 253),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.red, // red as border color
-                                ),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: Text(
-                                  'Hey this is my long text appbar title',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 11, 11, 11),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                          );
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks[index];
+                    return TaskListRow(
+                      task: task,
+                      totalTasks: 20,
+                    );
                   },
                 ))
               ],

@@ -30,17 +30,12 @@ class LandingScreenState extends State<LandingScreen> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              systemNavigationBarColor: Colors.teal, // Navigation bar
-              statusBarColor: Colors.teal, // Status bar
-            ),
             title: const Text(
               'Tasks to do also!!',
               style: TextStyle(fontWeight: FontWeight.w600, color: Colors.teal),
             ),
             bottom: const TabBar(
               indicatorColor: Colors.teal,
-              labelColor: Colors.teal,
               tabs: [
                 Tab(
                   icon: Icon(
