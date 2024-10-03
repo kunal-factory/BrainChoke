@@ -101,62 +101,67 @@ class SubTaskRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 0, // Remove shadow for flat design
       color: subTask.isCompleted
           ? Colors.green[100]
           : Colors.grey[200], // Background color based on status
-      child: ListTile(
-        title: Text(
-          subTask.title,
-          style: TextStyle(
-            decoration: subTask.isCompleted
-                ? TextDecoration.lineThrough
-                : TextDecoration.none,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: subTask.isCompleted
-                ? Colors.green[700]
-                : Colors.black, // Darker green for completed, black for not
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/taskDetail');
+        },
+        child: ListTile(
+          title: Text(
+            subTask.title,
+            style: TextStyle(
+              decoration: subTask.isCompleted
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: subTask.isCompleted
+                  ? Colors.green[700]
+                  : Colors.black, // Darker green for completed, black for not
+            ),
           ),
-        ),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Due Date
-            Row(
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 14,
-                  color: Colors.grey[600],
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'Due: ${subTask.dueDate.toLocal().toString().split(' ')[0]}',
-                  style: TextStyle(
-                    fontSize: 12,
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Due Date
+              Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today,
+                    size: 14,
                     color: Colors.grey[600],
                   ),
-                ),
-              ],
-            ),
-            // Priority Tag
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: _getPriorityColor(subTask.priority),
-                borderRadius: BorderRadius.circular(12),
+                  SizedBox(width: 4),
+                  Text(
+                    'Due: ${subTask.dueDate.toLocal().toString().split(' ')[0]}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
               ),
-              child: Text(
-                subTask.priority,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
+              // Priority Tag
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: _getPriorityColor(subTask.priority),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  subTask.priority,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

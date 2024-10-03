@@ -32,7 +32,7 @@ class TaskListRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       color: task.color.withOpacity(0.3),
       child: ListTile(
         leading: CircleAvatar(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectorders/Mobile/It_screen.dart';
 import 'package:projectorders/Mobile/landing_screen.dart';
+import 'package:projectorders/Mobile/task_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LandingScreen(),
         '/second': (context) => const ItScreen(),
+        '/taskDetail': (context) => TaskDetailScreen(),
       },
     );
   }
